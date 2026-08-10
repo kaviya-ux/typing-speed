@@ -68,10 +68,3 @@ This project was created to practice and improve:
 * Store previous typing results
 * Add dark/light mode
 * Add typing history using Local Storage
-
-## 👩‍💻 Author
-
-**Kaviya**
-
-A frontend project created for learning and practicing JavaScript development.
-# typing-speed
