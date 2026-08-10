@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 800px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+        /* TITLE */
+        h1 {
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 25px;
+        }
+        .description {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+        /* RESULT BOX */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .stat-box {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-box h3 {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .stat-box p {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+        /* TEXT */
+        .text-box {
+            background: #f9fafb;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 18px;
+            min-height: 130px;
+        }
+        .correct {
+            color: #16a34a;
+        }
+        .incorrect {
+            color: #dc2626;
+            background: #fee2e2;
+        }
+        .current {
+            border-bottom: 2px solid #2563eb;
+        }
+        /* TEXTAREA */
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 17px;
+            resize: none;
+            outline: none;
+        }
+        textarea:focus {
+            border-color: #2563eb;
+        }
+        textarea:disabled {
+            background: #f3f4f6;
+            cursor: not-allowed;
+        }
+        /* BUTTONS */
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button {
+            flex: 1;
+            padding: 13px;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+        }
+        .start-btn {
+            background: #2563eb;
+        }
+        .start-btn:hover {
+            background: #1d4ed8;
+        }
+        .restart-btn {
+            background: #dc2626;
+        }
+        .restart-btn:hover {
+            background: #b91c1c;
+        }
+        /* RESULT */
+        #result {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #16a34a;
+        }
+        /* MOBILE */
+        @media (max-width: 700px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            .text-box {
+                font-size: 16px;
+            }
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⌨️ Typing Speed Test</h1>
+        <p class="description">
+            Test your typing speed and accuracy in 60 seconds.
+        </p>
+        <!-- STATISTICS -->
+        <div class="stats">
+            <div class="stat-box">
+                <h3>Time Left</h3>
+                <p>
+                    <span id="time">60</span>s
+                </p>
+            </div>
+            <div class="stat-box">
+                <h3>WPM</h3>
+                <p id="wpm">
+                    0
+                </p>
+            </div>
+            <div class="stat-box">
+                <h3>Accuracy</h3>
+                <p>
+                    <span id="accuracy">0</span>%
+                </p>
+            </div>
+        </div>
+        <!-- TEXT TO TYPE -->
+        <div class="text-box" id="textDisplay">
+        </div>
+        <!-- USER INPUT -->
+        <textarea  id="textInput" placeholder="Click Start and begin typing..."
+            disabled>
+        </textarea>
+        <!-- BUTTONS -->
+        <div class="buttons">
+            <button class="start-btn" id="startBtn" onclick="startTest()">
+                Start Test
+            </button>
+            <button class="restart-btn" onclick="restartTest()">
+                Restart
+            </button>
+        </div>
+        <!-- RESULT -->
+        <div id="result"></div>
+    </div>
+    <script>
+        // TYPING TEXTS
+        const texts = [
+
+            "Learning JavaScript is an important step for becoming a good web developer.",
+
+            "Practice every day to improve your typing speed and programming skills.",
+
+            "React is a popular JavaScript library used for building modern user interfaces.",
+
+            "Writing clean and simple code makes your projects easier to understand.",
+
+            "A good developer solves problems by thinking logically and practicing regularly."
+        ];
+        let selectedText = "";
+        let timeLeft = 60;
+        let timer = null;
+        let testStarted = false;
+        // ELEMENTS
+        const textDisplay =
+            document.getElementById("textDisplay");
+
+        const textInput =
+            document.getElementById("textInput");
+
+        const timeDisplay =
+            document.getElementById("time");
+
+        const wpmDisplay =
+            document.getElementById("wpm");
+
+        const accuracyDisplay =
+            document.getElementById("accuracy");
+
+        const result =
+            document.getElementById("result");
+
+        const startButton =
+            document.getElementById("startBtn");
+        // SELECT RANDOM TEXT
+        function selectText() {
+            const randomIndex =
+                Math.floor(
+                    Math.random() * texts.length
+                );
+            selectedText =
+                texts[randomIndex];
+            displayText();
+        }
+        // DISPLAY TEXT
+        function displayText() {
+            textDisplay.innerHTML = "";
+            selectedText.split("").forEach(
+                function(character, index) {
+                    const span =
+                        document.createElement("span");
+                    span.textContent =
+                        character;
+                    span.id =
+                        "char-" + index;
+                    textDisplay.appendChild(span);
+                }
+            );
+        }
+        // START TEST
+        function startTest() {
+            if (testStarted) {
+                return;
+            }
+            testStarted = true;
+            textInput.disabled = false;
+            textInput.value = "";
+            textInput.focus();
+            result.textContent = "";
+            startButton.textContent = "Test Running...";
+            startButton.disabled = true;
+            startTimer();
+        }
+        // TIMER
+        function startTimer() {
+            timer = setInterval(
+                function() {
+                    timeLeft--;
+                    timeDisplay.textContent =timeLeft;
+                    calculateResult();
+                    if (timeLeft <= 0) {
+                        finishTest();
+                    }
+                },
+                1000
+            );
+        }
+        // USER TYPING
+        textInput.addEventListener(
+            "input",
+            function() {
+                if (!testStarted) {
+                    return;
+                }
+                const typedText = textInput.value;
+                const characters = textDisplay.querySelectorAll("span");
+                let correctCharacters = 0;
+                characters.forEach(
+                    function(character, index) {
+                        character.classList.remove(
+                            "correct",
+                            "incorrect",
+                            "current"
+                        );
+                        if (
+                            index < typedText.length
+                        ) {
+                            if (
+                                typedText[index] ===
+                                selectedText[index]
+                            ) {
+                                character.classList.add(
+                                    "correct"
+                                );
+                                correctCharacters++;
+                            } else {
+                                character.classList.add(
+                                    "incorrect"
+                                );
+                            }
+                        }
+                        else if (
+                            index === typedText.length
+                        ) {
+                            character.classList.add(
+                                "current"
+                            );
+                        }
+                    }
+                );
+                calculateResult();
+                // FINISH IF TEXT IS COMPLETED
+                if (
+                    typedText.length ===
+                    selectedText.length
+                ) {
+                    finishTest();
+                }
+            }
+        );
+        // CALCULATE RESULT
+        function calculateResult() {
+            const typedText =
+                textInput.value;
+            let correctCharacters = 0;
+            for (
+                let i = 0;
+                i < typedText.length;
+                i++
+            ) {
+                if (
+                    typedText[i] ===
+                    selectedText[i]
+                ) {
+                    correctCharacters++;
+                }
+            }
+            // ACCURACY
+            let accuracy = 0;
+            if (typedText.length > 0) {
+                accuracy = Math.round(
+                        (correctCharacters /
+                        typedText.length) * 100
+                    );
+            }
+            accuracyDisplay.textContent = accuracy;
+            // WPM
+            const elapsedTime = 60 - timeLeft;
+            let wpm = 0;
+            if (elapsedTime > 0) {
+                wpm = Math.round(
+                        (correctCharacters / 5) /
+                        (elapsedTime / 60)
+                    );
+            }
+            wpmDisplay.textContent =wpm;
+        }
+        // FINISH TEST
+        function finishTest() {
+            clearInterval(timer);
+            testStarted = false;
+            textInput.disabled = true;
+            startButton.disabled = false;
+            startButton.textContent =
+                "Start Test";
+            calculateResult();
+            result.textContent =
+                "Test completed! Your typing speed is "
+                + wpmDisplay.textContent
+                + " WPM with "
+                + accuracyDisplay.textContent
+                + "% accuracy.";
+        }
+        // RESTART TEST
+        function restartTest() {
+
+            clearInterval(timer);
+
+            timeLeft = 60;
+
+            testStarted = false;
+
+            timeDisplay.textContent =
+                timeLeft;
+
+            wpmDisplay.textContent =
+                "0";
+
+            accuracyDisplay.textContent =
+                "0";
+
+            textInput.value = "";
+
+            textInput.disabled = true;
+
+            startButton.disabled = false;
+
+            startButton.textContent =
+                "Start Test";
+
+            result.textContent = "";
+
+            selectText();
+
+        }
+
+
+        // LOAD INITIAL TEXT
+
+        selectText();
+
+    </script>
+
+</body>
+</html>
