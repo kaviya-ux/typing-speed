@@ -2,7 +2,7 @@
 
 A simple and interactive **Typing Speed Test** web application built using **HTML, CSS, and JavaScript**. The application allows users to test their typing speed, accuracy, and performance within a given time.
 
-## 🚀 Features
+##  Features
 
 * ⏱️ Timer-based typing test
 * ⌨️ Random typing text
@@ -13,24 +13,13 @@ A simple and interactive **Typing Speed Test** web application built using **HTM
 * 📱 Simple and responsive user interface
 * ⚡ Fast and easy to use
 
-## 🛠️ Technologies Used
+##  Technologies Used
 
 * **HTML5** – Structure of the application
 * **CSS3** – Styling and responsive design
 * **JavaScript** – Timer, typing logic, WPM calculation, and accuracy calculation
 
-## 📂 Project Structure
-
-```text
-Typing-Speed-Test/
-│
-├── index.html
-├── style.css
-├── script.js
-└── README.md
-```
-
-## 🎮 How to Use
+##  How to Use
 
 1. Open the project in your browser.
 2. Click inside the typing input area.
@@ -40,14 +29,13 @@ Typing-Speed-Test/
 6. After the test, your **WPM** and **accuracy** will be displayed.
 7. Click the **Restart** button to take the test again.
 
-## 📊 Performance
+##  Performance
 
 The application measures:
-
 * **WPM (Words Per Minute)** – Shows how many words you can type in one minute.
 * **Accuracy** – Shows the percentage of correctly typed characters.
 
-## 💡 Purpose
+##  Purpose
 
 This project was created to practice and improve:
 
@@ -58,13 +46,3 @@ This project was created to practice and improve:
 * String and character comparison
 * Basic calculations
 * User interaction
-
-## 🔮 Future Improvements
-
-* Add different difficulty levels
-* Add multiple typing passages
-* Add a 30-second and 60-second mode
-* Add a leaderboard
-* Store previous typing results
-* Add dark/light mode
-* Add typing history using Local Storage
