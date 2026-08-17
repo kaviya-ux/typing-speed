@@ -1,17 +1,17 @@
-# ⌨️ Typing Speed Test
+#  Typing Speed Test
 
 A simple and interactive **Typing Speed Test** web application built using **HTML, CSS, and JavaScript**. The application allows users to test their typing speed, accuracy, and performance within a given time.
 
 ##  Features
 
-* ⏱️ Timer-based typing test
-* ⌨️ Random typing text
-* 📊 Calculates typing speed in **Words Per Minute (WPM)**
-* 🎯 Calculates typing accuracy
-* 🔄 Restart test option
-* 📈 Displays typing performance after completing the test
-* 📱 Simple and responsive user interface
-* ⚡ Fast and easy to use
+*  Timer-based typing test
+*  Random typing text
+*  Calculates typing speed in **Words Per Minute (WPM)**
+*  Calculates typing accuracy
+*  Restart test option
+*  Displays typing performance after completing the test
+*  Simple and responsive user interface
+*  Fast and easy to use
 
 ##  Technologies Used
 
