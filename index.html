@@ -1,121 +1,116 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Typing Speed Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <h1>⌨️ Typing Speed Test</h1>
-        <p class="description">
+<body class="bg-gray-100 min-h-screen flex justify-center items-center font-sans p-4">
+
+    <div class="w-full max-w-[800px] bg-white p-6 sm:p-[30px] rounded-2xl shadow-lg">
+
+        <h1 class="text-center text-gray-800 text-3xl font-bold mb-2">⌨️ Typing Speed Test</h1>
+        <p class="text-center text-gray-500 mb-6">
             Test your typing speed and accuracy in 60 seconds.
         </p>
+
         <!-- STATISTICS -->
-        <div class="stats">
-            <div class="stat-box">
-                <h3>Time Left</h3>
-                <p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div class="bg-gray-100 p-4 rounded-lg text-center">
+                <h3 class="text-gray-500 text-sm mb-2">Time Left</h3>
+                <p class="text-2xl font-bold text-blue-600">
                     <span id="time">60</span>s
                 </p>
             </div>
-            <div class="stat-box">
-                <h3>WPM</h3>
-                <p id="wpm">
+            <div class="bg-gray-100 p-4 rounded-lg text-center">
+                <h3 class="text-gray-500 text-sm mb-2">WPM</h3>
+                <p id="wpm" class="text-2xl font-bold text-blue-600">
                     0
                 </p>
             </div>
-            <div class="stat-box">
-                <h3>Accuracy</h3>
-                <p>
+            <div class="bg-gray-100 p-4 rounded-lg text-center">
+                <h3 class="text-gray-500 text-sm mb-2">Accuracy</h3>
+                <p class="text-2xl font-bold text-blue-600">
                     <span id="accuracy">0</span>%
                 </p>
             </div>
         </div>
+
         <!-- TEXT TO TYPE -->
-        <div class="text-box" id="textDisplay">
+        <div id="textDisplay"
+            class="bg-gray-50 border border-gray-300 rounded-lg p-5 mb-5 leading-relaxed text-lg min-h-[130px]">
         </div>
+
         <!-- USER INPUT -->
-        <textarea  id="textInput" placeholder="Click Start and begin typing..."
-            disabled>
-        </textarea>
+        <textarea id="textInput" placeholder="Click Start and begin typing..."
+            class="w-full h-[120px] p-4 border border-gray-300 rounded-lg text-lg resize-none outline-none focus:border-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+            disabled></textarea>
+
         <!-- BUTTONS -->
-        <div class="buttons">
-            <button class="start-btn" id="startBtn" onclick="startTest()">
+        <div class="flex flex-col sm:flex-row gap-2.5 mt-5">
+            <button id="startBtn" onclick="startTest()"
+                class="flex-1 py-3 rounded-lg text-base text-white cursor-pointer bg-blue-600 hover:bg-blue-700 transition-colors">
                 Start Test
             </button>
-            <button class="restart-btn" onclick="restartTest()">
+            <button onclick="restartTest()"
+                class="flex-1 py-3 rounded-lg text-base text-white cursor-pointer bg-red-600 hover:bg-red-700 transition-colors">
                 Restart
             </button>
         </div>
+
         <!-- RESULT -->
-        <div id="result"></div>
+        <div id="result" class="text-center mt-6 text-xl font-bold text-green-600"></div>
+
     </div>
+
     <script>
         // TYPING TEXTS
         const texts = [
-
             "Learning JavaScript is an important step for becoming a good web developer.",
-
             "Practice every day to improve your typing speed and programming skills.",
-
             "React is a popular JavaScript library used for building modern user interfaces.",
-
             "Writing clean and simple code makes your projects easier to understand.",
-
             "A good developer solves problems by thinking logically and practicing regularly."
         ];
+
         let selectedText = "";
         let timeLeft = 60;
         let timer = null;
         let testStarted = false;
+
         // ELEMENTS
-        const textDisplay =
-            document.getElementById("textDisplay");
+        const textDisplay = document.getElementById("textDisplay");
+        const textInput = document.getElementById("textInput");
+        const timeDisplay = document.getElementById("time");
+        const wpmDisplay = document.getElementById("wpm");
+        const accuracyDisplay = document.getElementById("accuracy");
+        const result = document.getElementById("result");
+        const startButton = document.getElementById("startBtn");
 
-        const textInput =
-            document.getElementById("textInput");
+        // TAILWIND CLASS GROUPS (used since we don't have a custom stylesheet anymore)
+        const correctClasses = ["text-green-600"];
+        const incorrectClasses = ["text-red-600", "bg-red-100"];
+        const currentClasses = ["border-b-2", "border-blue-600"];
 
-        const timeDisplay =
-            document.getElementById("time");
-
-        const wpmDisplay =
-            document.getElementById("wpm");
-
-        const accuracyDisplay =
-            document.getElementById("accuracy");
-
-        const result =
-            document.getElementById("result");
-
-        const startButton =
-            document.getElementById("startBtn");
         // SELECT RANDOM TEXT
         function selectText() {
-            const randomIndex =
-                Math.floor(
-                    Math.random() * texts.length
-                );
-            selectedText =
-                texts[randomIndex];
+            const randomIndex = Math.floor(Math.random() * texts.length);
+            selectedText = texts[randomIndex];
             displayText();
         }
+
         // DISPLAY TEXT
         function displayText() {
             textDisplay.innerHTML = "";
-            selectedText.split("").forEach(
-                function(character, index) {
-                    const span =
-                        document.createElement("span");
-                    span.textContent =
-                        character;
-                    span.id =
-                        "char-" + index;
-                    textDisplay.appendChild(span);
-                }
-            );
+            selectedText.split("").forEach(function (character, index) {
+                const span = document.createElement("span");
+                span.textContent = character;
+                span.id = "char-" + index;
+                textDisplay.appendChild(span);
+            });
         }
+
         // START TEST
         function startTest() {
             if (testStarted) {
@@ -130,118 +125,83 @@
             startButton.disabled = true;
             startTimer();
         }
+
         // TIMER
         function startTimer() {
-            timer = setInterval(
-                function() {
-                    timeLeft--;
-                    timeDisplay.textContent =timeLeft;
-                    calculateResult();
-                    if (timeLeft <= 0) {
-                        finishTest();
-                    }
-                },
-                1000
-            );
-        }
-        // USER TYPING
-        textInput.addEventListener(
-            "input",
-            function() {
-                if (!testStarted) {
-                    return;
-                }
-                const typedText = textInput.value;
-                const characters = textDisplay.querySelectorAll("span");
-                let correctCharacters = 0;
-                characters.forEach(
-                    function(character, index) {
-                        character.classList.remove(
-                            "correct",
-                            "incorrect",
-                            "current"
-                        );
-                        if (
-                            index < typedText.length
-                        ) {
-                            if (
-                                typedText[index] ===
-                                selectedText[index]
-                            ) {
-                                character.classList.add(
-                                    "correct"
-                                );
-                                correctCharacters++;
-                            } else {
-                                character.classList.add(
-                                    "incorrect"
-                                );
-                            }
-                        }
-                        else if (
-                            index === typedText.length
-                        ) {
-                            character.classList.add(
-                                "current"
-                            );
-                        }
-                    }
-                );
+            timer = setInterval(function () {
+                timeLeft--;
+                timeDisplay.textContent = timeLeft;
                 calculateResult();
-                // FINISH IF TEXT IS COMPLETED
-                if (
-                    typedText.length ===
-                    selectedText.length
-                ) {
+                if (timeLeft <= 0) {
                     finishTest();
                 }
+            }, 1000);
+        }
+
+        // USER TYPING
+        textInput.addEventListener("input", function () {
+            if (!testStarted) {
+                return;
             }
-        );
+            const typedText = textInput.value;
+            const characters = textDisplay.querySelectorAll("span");
+
+            characters.forEach(function (character, index) {
+                character.classList.remove(...correctClasses, ...incorrectClasses, ...currentClasses);
+
+                if (index < typedText.length) {
+                    if (typedText[index] === selectedText[index]) {
+                        character.classList.add(...correctClasses);
+                    } else {
+                        character.classList.add(...incorrectClasses);
+                    }
+                } else if (index === typedText.length) {
+                    character.classList.add(...currentClasses);
+                }
+            });
+
+            calculateResult();
+
+            // FINISH IF TEXT IS COMPLETED
+            if (typedText.length === selectedText.length) {
+                finishTest();
+            }
+        });
+
         // CALCULATE RESULT
         function calculateResult() {
-            const typedText =
-                textInput.value;
+            const typedText = textInput.value;
             let correctCharacters = 0;
-            for (
-                let i = 0;
-                i < typedText.length;
-                i++
-            ) {
-                if (
-                    typedText[i] ===
-                    selectedText[i]
-                ) {
+
+            for (let i = 0; i < typedText.length; i++) {
+                if (typedText[i] === selectedText[i]) {
                     correctCharacters++;
                 }
             }
+
             // ACCURACY
             let accuracy = 0;
             if (typedText.length > 0) {
-                accuracy = Math.round(
-                        (correctCharacters /
-                        typedText.length) * 100
-                    );
+                accuracy = Math.round((correctCharacters / typedText.length) * 100);
             }
             accuracyDisplay.textContent = accuracy;
+
             // WPM
             const elapsedTime = 60 - timeLeft;
             let wpm = 0;
             if (elapsedTime > 0) {
-                wpm = Math.round(
-                        (correctCharacters / 5) /
-                        (elapsedTime / 60)
-                    );
+                wpm = Math.round((correctCharacters / 5) / (elapsedTime / 60));
             }
-            wpmDisplay.textContent =wpm;
+            wpmDisplay.textContent = wpm;
         }
+
         // FINISH TEST
         function finishTest() {
             clearInterval(timer);
             testStarted = false;
             textInput.disabled = true;
             startButton.disabled = false;
-            startButton.textContent =
-                "Start Test";
+            startButton.textContent = "Start Test";
             calculateResult();
             result.textContent =
                 "Test completed! Your typing speed is "
@@ -250,44 +210,25 @@
                 + accuracyDisplay.textContent
                 + "% accuracy.";
         }
+
         // RESTART TEST
         function restartTest() {
-
             clearInterval(timer);
-
             timeLeft = 60;
-
             testStarted = false;
-
-            timeDisplay.textContent =
-                timeLeft;
-
-            wpmDisplay.textContent =
-                "0";
-
-            accuracyDisplay.textContent =
-                "0";
-
+            timeDisplay.textContent = timeLeft;
+            wpmDisplay.textContent = "0";
+            accuracyDisplay.textContent = "0";
             textInput.value = "";
-
             textInput.disabled = true;
-
             startButton.disabled = false;
-
-            startButton.textContent =
-                "Start Test";
-
+            startButton.textContent = "Start Test";
             result.textContent = "";
-
             selectText();
-
         }
 
-
         // LOAD INITIAL TEXT
-
         selectText();
-
     </script>
 
 </body>
