@@ -1,48 +1,62 @@
-#  Typing Speed Test
+# ⌨️ Typing Speed Test
 
-A simple and interactive **Typing Speed Test** web application built using **HTML, CSS, and JavaScript**. The application allows users to test their typing speed, accuracy, and performance within a given time.
+A single-file typing speed test built with HTML, Tailwind CSS, and vanilla JavaScript. Type the given sentence within 60 seconds and see your live WPM (words per minute) and accuracy.
 
-##  Features
+## Live Demo
 
-*  Timer-based typing test
-*  Random typing text
-*  Calculates typing speed in **Words Per Minute (WPM)**
-*  Calculates typing accuracy
-*  Restart test option
-*  Displays typing performance after completing the test
-*  Simple and responsive user interface
-*  Fast and easy to use
+Open `index.html` in any browser. That's it — no setup required.
 
-##  Technologies Used
+## Features
 
-* **HTML5** – Structure of the application
-* **CSS3** – Styling and responsive design
-* **JavaScript** – Timer, typing logic, WPM calculation, and accuracy calculation
+- 60-second countdown timer
+- Random sentence picked from a small text pool each time you start/restart
+- Live WPM (words per minute) calculation
+- Live accuracy percentage as you type
+- Character-by-character feedback: correct characters turn green, incorrect ones are highlighted red, and the current character is underlined
+- Auto-finishes the test early if you type the full sentence before time runs out
+- Restart button to reset everything and get a new sentence
 
-##  How to Use
+## Tech Stack
 
-1. Open the project in your browser.
-2. Click inside the typing input area.
-3. Start typing the displayed text.
-4. The timer starts when you begin typing.
-5. Complete the given text as accurately and quickly as possible.
-6. After the test, your **WPM** and **accuracy** will be displayed.
-7. Click the **Restart** button to take the test again.
+- HTML5
+- [Tailwind CSS](https://tailwindcss.com/) (via CDN)
+- Vanilla JavaScript (no frameworks, no libraries)
 
-##  Performance
+## How It Works
 
-The application measures:
-* **WPM (Words Per Minute)** – Shows how many words you can type in one minute.
-* **Accuracy** – Shows the percentage of correctly typed characters.
+- A random sentence is split into individual `<span>` characters and rendered in the text box.
+- As the user types in the `<textarea>`, each typed character is compared against the corresponding character in the sentence, and Tailwind classes (`text-green-600`, `text-red-600 bg-red-100`, `border-b-2 border-blue-600`) are toggled with `classList` to show correct, incorrect, and current-position feedback.
+- WPM is calculated as `(correct characters / 5) / (elapsed minutes)`, the standard "5 characters = 1 word" approximation.
+- Accuracy is `(correct characters / total typed characters) * 100`.
+- The test ends either when the 60-second timer hits zero or when the user finishes typing the full sentence.
 
-##  Purpose
+## Project Structure
 
-This project was created to practice and improve:
+```
+typing-speed-test/
+├── index.html   # everything: markup, styling (Tailwind), and JS logic
+└── README.md
+```
 
-* JavaScript fundamentals
-* DOM manipulation
-* Event handling
-* Timer functionality
-* String and character comparison
-* Basic calculations
-* User interaction
+Everything lives in a single `index.html` file, making it easy to open, edit, and deploy anywhere (GitHub Pages, Netlify, or just double-click to open locally).
+
+## Running Locally
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/your-username/typing-speed-test.git
+   ```
+2. Open `index.html` in your browser.
+
+No installation, no npm, no build step required.
+
+## Possible Improvements
+
+- Add difficulty levels (short/medium/long paragraphs)
+- Add a "best score" tracker using localStorage
+- Support custom typing duration (30s / 60s / 120s)
+- Add sound effects for correct/incorrect keystrokes
+
+## License
+
+Free to use for learning or personal projects.
