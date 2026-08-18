@@ -20,7 +20,6 @@ Open `index.html` in any browser. That's it — no setup required.
 
 - HTML5
 - [Tailwind CSS](https://tailwindcss.com/) (via CDN)
-- Vanilla JavaScript (no frameworks, no libraries)
 
 ## How It Works
 
@@ -39,16 +38,6 @@ typing-speed-test/
 ```
 
 Everything lives in a single `index.html` file, making it easy to open, edit, and deploy anywhere (GitHub Pages, Netlify, or just double-click to open locally).
-
-## Running Locally
-
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/your-username/typing-speed-test.git
-   ```
-2. Open `index.html` in your browser.
-
-No installation, no npm, no build step required.
 
 ## Possible Improvements
 
