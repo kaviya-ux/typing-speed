@@ -2,10 +2,6 @@
 
 A single-file typing speed test built with HTML, Tailwind CSS, and vanilla JavaScript. Type the given sentence within 60 seconds and see your live WPM (words per minute) and accuracy.
 
-## Live Demo
-
-Open `index.html` in any browser. That's it — no setup required.
-
 ## Features
 
 - 60-second countdown timer
@@ -28,16 +24,6 @@ Open `index.html` in any browser. That's it — no setup required.
 - WPM is calculated as `(correct characters / 5) / (elapsed minutes)`, the standard "5 characters = 1 word" approximation.
 - Accuracy is `(correct characters / total typed characters) * 100`.
 - The test ends either when the 60-second timer hits zero or when the user finishes typing the full sentence.
-
-## Project Structure
-
-```
-typing-speed-test/
-├── index.html   # everything: markup, styling (Tailwind), and JS logic
-└── README.md
-```
-
-Everything lives in a single `index.html` file, making it easy to open, edit, and deploy anywhere (GitHub Pages, Netlify, or just double-click to open locally).
 
 ## Possible Improvements
 
