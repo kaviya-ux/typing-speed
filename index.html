@@ -14,8 +14,6 @@
         <p class="text-center text-gray-500 mb-6">
             Test your typing speed and accuracy in 60 seconds.
         </p>
-
-        <!-- STATISTICS -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
             <div class="bg-gray-100 p-4 rounded-lg text-center">
                 <h3 class="text-gray-500 text-sm mb-2">Time Left</h3>
@@ -167,7 +165,6 @@
                 finishTest();
             }
         });
-
         // CALCULATE RESULT
         function calculateResult() {
             const typedText = textInput.value;
@@ -178,14 +175,12 @@
                     correctCharacters++;
                 }
             }
-
             // ACCURACY
             let accuracy = 0;
             if (typedText.length > 0) {
                 accuracy = Math.round((correctCharacters / typedText.length) * 100);
             }
             accuracyDisplay.textContent = accuracy;
-
             // WPM
             const elapsedTime = 60 - timeLeft;
             let wpm = 0;
@@ -194,7 +189,6 @@
             }
             wpmDisplay.textContent = wpm;
         }
-
         // FINISH TEST
         function finishTest() {
             clearInterval(timer);
@@ -210,7 +204,6 @@
                 + accuracyDisplay.textContent
                 + "% accuracy.";
         }
-
         // RESTART TEST
         function restartTest() {
             clearInterval(timer);
@@ -226,10 +219,7 @@
             result.textContent = "";
             selectText();
         }
-
-        // LOAD INITIAL TEXT
         selectText();
     </script>
-
 </body>
 </html>
