@@ -31,7 +31,3 @@ A single-file typing speed test built with HTML, Tailwind CSS, and vanilla JavaS
 - Add a "best score" tracker using localStorage
 - Support custom typing duration (30s / 60s / 120s)
 - Add sound effects for correct/incorrect keystrokes
-
-## License
-
-Free to use for learning or personal projects.
