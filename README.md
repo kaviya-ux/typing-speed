@@ -1,4 +1,3 @@
-
 # Typing Speed Test
 
 A single-file typing speed test built with HTML, Tailwind CSS, and vanilla JavaScript. Type the given sentence within 60 seconds and see your live WPM (words per minute) and accuracy.
